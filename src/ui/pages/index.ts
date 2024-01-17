@@ -1,0 +1,6 @@
+export { default as NoFound } from '@pages/404'
+export { default as HomePage } from '@pages/home'
+export { default as LoginPage } from '@pages/auth/Login'
+export { FormPage, PanelFormsByIdPage, FormAllPage } from '@pages/FormsPage'
+export { default as UserPage } from '@pages/users'
+export { default as EstablishmentPage } from '@pages/EstablishmentPage'

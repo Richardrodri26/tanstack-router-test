@@ -1,0 +1,268 @@
+query login($usuario: String!, $clave: String!){
+  login(usuario:$usuario, clave:$clave){
+    access_token
+    result{
+      email
+      phone
+      usertype
+      firstname
+      lastname
+    }
+  }
+}
+
+query verifyJWT ($token: String!){
+  getUserByJWT(token: $token) {
+    token
+    data {
+      email
+      phone
+      usertype
+      firstname
+      lastname
+       identification
+    }
+  }
+}
+
+query getAllForms($opt: FilterDto) {
+  findFormularioAll(opt: $opt){
+    items {
+      id
+      razon_social
+      fecha_presentacion
+      tipo
+      regimen
+      razon_social
+      numero_documento
+      fecha_inscripcion
+      direccion_notificacion
+      status
+      etapa
+    }
+    meta {
+      ...metaPagination
+    }
+  }
+}
+
+query getAllUsers($opt: FilterDto){
+  findAllUsers(
+    opt: $opt
+  ){
+    items{
+      email
+      firstname
+      lastname
+      usertype
+      id
+      phone
+      total_formulario_no_activos
+      total_formulario_activos
+      total_formulario
+    }
+     meta {
+      ...metaPagination
+    }
+  }
+}
+
+# Get establecimientos
+query getEstablishmentsFromFormById($opt: FilterDto, $args: InputDetailsFormulario){
+  getDetailFormulatio(
+    opt: $opt,
+    args: $args) {
+     establecimientos{
+      id
+      nombre
+      direccion
+      fecha_apertura
+      ingreso_promedio_mensual
+      numero_empleados
+      pago_icat
+      al_dia_icat
+      geolocalizacion
+      referencia_catastral
+      foto_predio_mongo_id
+      foto_predio_mongo_maps_id
+
+      tipo_establecimiento
+    }
+    meta {
+      ...metaPagination
+    }
+  }
+}
+
+# Get Contribuyentes
+query getTaxpayersFromFormById($id: ID) {
+  findFormularioById(id: $id) {
+    id
+    fecha_presentacion
+    user {
+      id
+      phone
+    }
+    contribuyentes {
+      id
+      numero_documento
+      dv
+      # encuestado_firma_mongo_id
+      encuestado_nombre
+      encuestado_apellido
+      encuestado_identificacion
+      tipo
+      regimen
+      razon_social
+      fecha_inscripcion
+      agente_retenedor
+      gran_contribuyente
+      temporal
+      identificacion_representante
+      nombre_representante
+      celular_representante
+
+      identificacion_revisor
+      nombre_revisor
+      celular_representante
+      tarjeta_profesional_revisor
+      direccion_notificacion
+      ciudad
+      departamento
+      barrio
+      correo
+      telefono
+      celular
+      numero_matricula
+      fecha_matricula
+      actividades {
+        id
+        codigo
+        descripcion
+        fecha_inicio
+      }
+    }
+  }
+}
+
+#Get anexos
+query getAnnexesFromFormById($opt: FilterDto, $args: InputDetailsFormulario){
+  getDetailFormulatio(
+    opt: $opt,
+    args: $args) {
+    anexos {
+      id
+      nombre
+      extension
+      tipo
+      archivo
+    }
+    meta {
+      ...metaPagination
+    }
+  }
+}
+
+#Get activities
+query getActivitiesFromFormById($opt: FilterDto, $args: InputDetailsFormulario){
+  getDetailFormulatio(
+    opt: $opt,
+    args: $args) {
+    actividades {
+      id
+      codigo
+      descripcion
+  	  fecha_inicio
+    }
+   meta {
+      ...metaPagination
+    }
+  }
+}
+
+#Get form byUserId
+query getAllFormByUserId($opt: FilterDto, $args: InputFindForumlarioAllAdmin){
+  findFormularioAllAdmin(
+    opt: $opt,
+    args: $args
+  ) {
+    items {
+      id
+      fecha_presentacion
+      tipo
+      regimen
+    	razon_social
+      numero_documento
+      fecha_inscripcion
+      direccion_notificacion
+      nombre_censador
+      fecha_presentacion
+      tipo_documento
+      status
+      etapa
+    }
+     meta {
+      ...metaPagination
+    }
+  }
+}
+
+mutation createEstablismentType($args: CreateTipoEstablecimientoInput){
+  createTipoEstablecimiento(
+    args:$args
+  ){
+    id
+    nombre
+    descripcion
+    status
+  }
+}
+
+ query getEstablishmentTypeById($id: Int){
+  getTipoEstablecimientoById(id:$id){
+    id
+    nombre
+    descripcion
+  }
+}
+
+query getAllEstablismentTypes($opt: FilterDto){
+  getAllTipoEstablecimientos(opt: $opt){
+    items{
+      id
+      nombre
+      descripcion
+      status
+      createAt
+    }
+    meta {
+      ...metaPagination
+    }
+  }
+}
+
+mutation updateEstablishmentType($id: Int, $args: UpdateTipoEstablecimientoInput){
+  updateTipoEstablecimiento(id: $id, args: $args){
+    id
+    nombre
+    descripcion
+    status
+  }
+}
+
+mutation changeStatusEstablishmentType($id: Int, $status: Boolean){
+  changeTipoEstablecimientoStatus(id: $id, status:$status){
+    id
+    status
+  }
+}
+
+# ------------------- fragment -------------------
+fragment metaPagination on PaginationMeta {
+  currentPage
+  itemCount
+  itemsPerPage
+  totalItems
+  totalPages
+}
+

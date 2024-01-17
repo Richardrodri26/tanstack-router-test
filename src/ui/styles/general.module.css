@@ -1,0 +1,5 @@
+
+
+.title__grid {
+    @apply lg:text-3xl font-bold text-3xl
+}

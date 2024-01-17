@@ -1,0 +1,15 @@
+
+.general__loading {
+    height: 45vh;
+    margin-bottom: 10px;
+}
+
+.general__loading g g:first-child g path {
+    fill: var(--main_color_a2);
+}
+.general__loading g g:nth-child(2) g path {
+    fill: var(--main_color);
+}
+.general__loading g g:last-child g path {
+    fill: var(--contrary_main_color);
+}
